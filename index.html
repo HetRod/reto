@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Legalización Gastos </title>
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&amp;display=swap" rel="stylesheet">
+
+    <!-- build:css assets/css/app.min.css -->
+    <!--== jqvmap Min CSS ==-->
+    <!--<link href="assets/css/jqvmap.min.css" rel="stylesheet" />-->
+    <!--== ChartJS Min CSS ==-->
+    <!--<link href="assets/css/chart.min.css" rel="stylesheet" />-->
+    <!--== DataTables Min CSS ==-->
+    <!--<link href="assets/css/datatables.min.css" rel="stylesheet" />-->
+    <!--== Select2 Min CSS ==-->
+    <!--<link href="assets/css/select2.min.css" rel="stylesheet" />-->
+    <!--== Bootstrap Min CSS ==-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <!-- endbuild -->
+</head>
+
+<body>
+    <!--== Start Header Wrapper ==-->
+    <header class="header-wrapper">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-3">
+                    <div class="logo-wrap">
+                        <a href="index.html"><img src="assets/img/logo.png" alt="logo" /></a>
+                    </div>
+                </div>
+
+                <div class="badge-tracker-item col-lg-6">
+                    <div class="title-top">
+                        <h3>Porcentaje de Validación del Sello</h3>
+                    </div>
+
+                    <div class="headline-round-content mtn-25 worldwide-stats">
+                        <div class="tracker-block tracker-block--5 bg-yellow"> 
+                            <h3 class="track-item__no infected">50%</h3>            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 col-lg-3">
+                    <div class="last-update-wrap">
+                        <p class="mb-0">Fecha: <span id="time" class="last-update"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--== End Header Wrapper ==-->
+
+    <!--== Start Main Content Wrapper ==-->
+    <main class="main-content-wrapper">
+        <div class="badge-tracker-wrap">
+            <div class="container">
+                <div class="row">
+                    
+                    <div class="col-xl-9 m-auto">
+                        <div class="badge-tracker-item">
+                            <div class="title-top">
+                                <h2>Reporte del Sello</h2>
+                            </div>
+
+                            <div class="badge-content-wrapper" id="badgeContainer">
+                                <!-- Sección de badges generados dinámicamente -->
+                            </div>
+                            
+                            <!-- Sección de paginación -->
+                            <div class="pagination" id="paginationContainer">
+                                <button id="prevPage" onclick="changePage(-1)">Previous</button>
+                                <span id="pageInfo">Page 1 of 4</span>
+                                <button id="nextPage" onclick="changePage(1)">Next</button>
+                            </div>
+                            
+                            <script>
+                                const data = [
+                                    { active: "10,000", deaths: "1,000", recovered: "5,000", newCases: "500"},
+                                    { active: "8,000", deaths: "800", recovered: "4,500", newCases: "400"},
+                                    { active: "20,000", deaths: "2,500", recovered: "15,000", newCases: "2,000"},
+                                    { active: "5,000", deaths: "300", recovered: "2,500", newCases: "100"},
+                                    { active: "15,000", deaths: "1,200", recovered: "10,000", newCases: "1,500" },
+                                    { active: "8,000", deaths: "800", recovered: "4,500", newCases: "400"},
+                                    { active: "20,000", deaths: "2,500", recovered: "15,000", newCases: "2,000"},
+                                    { active: "5,000", deaths: "300", recovered: "2,500", newCases: "100"},
+                                    { active: "20,000", deaths: "2,500", recovered: "15,000", newCases: "2,000"},
+                                    { active: "5,000", deaths: "300", recovered: "2,500", newCases: "100"},
+                                    { active: "15,000", deaths: "1,200", recovered: "10,000", newCases: "1,500"}
+                                ];
+                            
+                                const itemsPerPage = 8; // Cambia este número para ajustar la cantidad de filas por página
+                                let currentPage = 1;
+                            
+                                function renderBadges() {
+                                    const container = document.getElementById('badgeContainer');
+                                    container.innerHTML = ''; // Limpiar contenido previo
+                                    const start = (currentPage - 1) * itemsPerPage;
+                                    const end = start + itemsPerPage;
+                            
+                                    data.slice(start, end).forEach(item => {
+                                        const badge = document.createElement('div');
+                                        badge.className = `badge-item worldwide-stats badge-bg-green`;
+                                        badge.innerHTML = `
+                                            <div class="badge-item__title">
+                                               <a href="/ruta_comprobante_1" target="_blank"> <p>Ver Comprobante</p></a>
+                                            </div>
+                                            <div class="badge-item__body">
+                                                <div class="badge-item__block">
+                                                    <p>Factura: <br><i class="fa fa-check-circle-o fa-2x" aria-hidden="true" style="color: green;"></i> </p>
+                                                </div>
+                                                <div class="badge-item__block">
+                                                    <p>Fecha: <br><i class="fa fa-check-circle-o fa-2x" aria-hidden="true" style="color: green;"></i> </p>
+                                                </div>
+
+                                                <div class="badge-item__block">
+                                                    <p>Valor: <br><i class="fa fa-times-circle-o fa-2x" aria-hidden="true" style="color: red;"></i></p>
+                                                </div>
+                                            </div>
+                                        `;
+                                        container.appendChild(badge);
+                                    });
+                            
+                                    document.getElementById('pageInfo').innerText = `Page ${currentPage} of ${Math.ceil(data.length / itemsPerPage)}`;
+                                    updatePaginationButtons();
+                                }
+                            
+                                function changePage(direction) {
+                                    const totalPages = Math.ceil(data.length / itemsPerPage);
+                                    currentPage += direction;
+                                    if (currentPage < 1) currentPage = 1;
+                                    if (currentPage > totalPages) currentPage = totalPages;
+                                    renderBadges();
+                                }
+                            
+                                function updatePaginationButtons() {
+                                    document.getElementById('prevPage').disabled = currentPage === 1;
+                                    document.getElementById('nextPage').disabled = currentPage === Math.ceil(data.length / itemsPerPage);
+                                }
+                            
+                                // Inicializar renderizado
+                                renderBadges();
+                            </script>
+                            
+                            
+                           
+                            
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--== End Main Content Wrapper ==-->
+
+
+    <!--=======================Javascript============================-->
+    <!-- build:js assets/js/app.min.js -->
+    <script>
+        const d = new Date();
+         // Formatear la fecha
+        const formattedDate = d.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        document.getElementById("time").textContent = formattedDate;
+    </script>
+        
+    <!--=== Modernizr Min Js ===-->
+    <!--<script src="assets/js/modernizr.min.js"></script>-->
+    <!--=== jQuery Min Js ===-->
+    <script src="assets/js/jquery.min.js"></script>
+    <!--=== jQuery Migration Min Js ===-->
+    <script src="assets/js/jquery-migrate.min.js"></script>
+    <!--=== Popper Min Js ===-->
+    <script src="assets/js/popper.min.js"></script>
+    <!--=== Bootstrap Min Js ===-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--=== Select2 Min Js ===-->
+    <script src="assets/js/select2.full.min.js"></script>
+    <!--=== Data Table Min Js ===-->
+    <script src="assets/js/datatables.min.js"></script>
+    <!--=== ChartJS Min Js ===-->
+    <script src="assets/js/chart.min.js"></script>
+    <!--=== jQuery Vector Map Min Js ===-->
+    <script src="assets/js/jquery.vmap.min.js"></script>
+    <!--=== jQuery Vector World Min Js ===-->
+    <script src="assets/js/jquery.vmap.world.js"></script>
+
+    <!--=== APP Js ===-->
+    <script src="assets/js/app.js"></script>
+    <!--=== Active Js ===-->
+    <script src="assets/js/active.js"></script>
+
+    <!-- endbuild -->
+</body>
+
+
+<!-- Mirrored from htmldemo.net/jibanu/jibanu/badge.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Sep 2024 12:46:54 GMT -->
+</html>
