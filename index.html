@@ -15,21 +15,329 @@
     <!--== Google Fonts ==-->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&amp;display=swap" rel="stylesheet">
 
-    <!-- build:css assets/css/app.min.css -->
-    <!--== jqvmap Min CSS ==-->
-    <!--<link href="assets/css/jqvmap.min.css" rel="stylesheet" />-->
-    <!--== ChartJS Min CSS ==-->
-    <!--<link href="assets/css/chart.min.css" rel="stylesheet" />-->
-    <!--== DataTables Min CSS ==-->
-    <!--<link href="assets/css/datatables.min.css" rel="stylesheet" />-->
-    <!--== Select2 Min CSS ==-->
-    <!--<link href="assets/css/select2.min.css" rel="stylesheet" />-->
-    <!--== Bootstrap Min CSS ==-->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+
 
     <!--== Main Style CSS ==-->
-    <link href="assets/css/style.css" rel="stylesheet" />
+
     <!-- endbuild -->
+    <style>
+        .header-wrapper {
+            padding: 20px 0;
+        }
+
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .pagination button {
+            margin: 0 10px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination span {
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+       
+        img {
+            max-width: 50%;
+            vertical-align: middle;
+        }
+
+                
+        body {
+            color: #555555;
+            font-size: 16px;
+            font-family: "Roboto", sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+       
+
+        .badge-item__body {
+                -webkit-flex-basis: 100%;
+                -ms-flex-preferred-size: 100%;
+                flex-basis: 100%;
+                width: 100%;
+                text-align: center;
+            }
+
+        .badge-item__body {
+            -webkit-flex-basis: calc(100% - 250px);
+            -ms-flex-preferred-size: calc(100% - 250px);
+            flex-basis: calc(100% - 250px);
+            width: calc(100% - 250px);
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-self: center;
+            -ms-flex-item-align: center;
+            align-self: center;
+            padding: 18px 20px 18px 50px;
+            color: #414141;
+            font-size: 14px;
+        }
+
+        .container,
+        .container-fluid,
+        .container-lg,
+        .container-md,
+        .container-sm,
+        .container-xl,
+        .container-xxl {
+            --bs-gutter-x: 1.875rem;
+        }
+
+        @media screen and (min-width: 1680px) {
+            .container {
+                max-width: 1620px;
+            }
+        }
+
+        .justify-content-between{
+            justify-content:space-between!important
+        }
+
+        .row{
+            --bs-gutter-x:1.5rem;
+            --bs-gutter-y:0;
+            display:flex;
+            flex-wrap:wrap;
+            margin-top:calc(-1 * var(--bs-gutter-y));
+            margin-right:calc(-.5 * var(--bs-gutter-x));
+            margin-left:calc(-.5 * var(--bs-gutter-x))
+        }
+
+        .align-items-center{
+            align-items:center!important
+        }
+
+        .col-lg-3{
+            flex:0 0 auto;
+            width:25%
+        }
+
+        @media only screen and (max-width: 767.98px) {
+            .logo-wrap {
+                margin-bottom: 15px;
+                margin-left: 10 px;
+            }
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+            .logo-wrap {
+                text-align: center;
+                margin-bottom: 20px;
+                margin-left: 10 px;
+            }
+        }
+
+        .badge-tracker-item:not(:last-child) {
+            margin-bottom: 60px;
+        }
+
+        .col-lg-6{
+            flex:0 0 auto;
+            width:50%
+        }
+
+        .body-dark .main-content-wrapper .title-top h2 {
+            color: #FFFFFF;
+        }
+
+        .mtn-25 {
+            margin: auto;
+            text-align: -webkit-center;
+        }
+
+        .tracker-block {
+            background-color: #FFFFFF;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+    
+        }
+
+       
+
+        .tracker-block--5 .track-item__title,
+        .tracker-block--5 .track-item__no,
+        .tracker-block--5 .track-item__new {
+            color: #FFFFFF;
+            font-size: 13px;
+        }
+
+        .tracker-block--5 .track-item__no {
+            font-size: 40px;
+            font-weight: 700;
+            margin: auto;
+        }
+
+        .tracker-block--5 .track-item__new {
+            margin-bottom: 0;
+        }
+
+        .tracker-block--5.bg-yellow {
+            background-color: #FFC260;
+            width: 40%;
+        
+        }
+        .col-sm-5{
+            flex:0 0 auto;
+            width:41.66666667%
+        }
+
+        .last-update-wrap {
+            color: #4D4D4D;
+            font-size: 14px;
+            font-style: italic;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 991.98px) {
+            .last-update-wrap {
+                text-align: left;
+            }
+        }
+
+        @media only screen and (max-width: 767.98px) {
+            .last-update-wrap {
+                text-align: left;
+            }
+        }
+
+        .mb-0{
+            margin-bottom:0!important
+        }
+
+        .main-content-wrapper {
+            background-color: #F7F8FC;
+        }
+
+        @media only screen and (max-width: 767.98px) {
+            .main-content-wrapper {
+                padding: 60px 0;
+            }
+        }
+
+        .col-xl-9{
+            flex:0 0 auto;
+            width:75%
+        }
+
+        .m-auto{
+            margin:auto!important
+        }
+
+
+        .badge-item__title {
+            background-color: #b0bfe9;
+            color: #FFFFFF;
+            padding: 16px 35px;
+            -webkit-flex-basis: 250px;
+            -ms-flex-preferred-size: 250px;
+            flex-basis: 250px;
+            width: 250px;
+            text-align: center;
+        }
+
+        .badge-item__block {
+            position: relative;
+            padding-left: 40px;
+            margin-left: 40px;
+        }
+
+        
+        .badge-item {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display:block;
+        }
+
+        .badge-item__block:before {
+            background-color: #7AEEC2;
+            content: "";
+            position: absolute;
+            left: 0;
+            top: -3px;
+            height: 30px;
+            width: 1px;
+        }
+
+
+        .badge-item {
+            background-color: #DFFFF3;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-content: center;
+            -ms-flex-line-pack: center;
+            align-content: center;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            margin-top: 5px;
+        }
+
+
+        .badge-bg-green {
+            background-color: #F1FCFC;
+        }
+
+        .title-top {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+
+        .badge-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+    </style>
 </head>
 
 <body>
@@ -43,11 +351,12 @@
                     </div>
                 </div>
 
-                <div class="badge-tracker-item col-lg-6">
+                <div class="badge-tracker-item col-lg-9">
                     <div class="title-top">
                         <h3>Porcentaje de Validación del Sello</h3>
                     </div>
 
+                    <!-- falta la clase headline-round-content y worldwide-stats -->
                     <div class="headline-round-content mtn-25 worldwide-stats">
                         <div class="tracker-block tracker-block--5 bg-yellow"> 
                             <h3 class="track-item__no infected">50%</h3>            
@@ -90,17 +399,18 @@
                             
                             <script>
                                 const data = [
-                                    { active: "10,000", deaths: "1,000", recovered: "5,000", newCases: "500"},
-                                    { active: "8,000", deaths: "800", recovered: "4,500", newCases: "400"},
-                                    { active: "20,000", deaths: "2,500", recovered: "15,000", newCases: "2,000"},
-                                    { active: "5,000", deaths: "300", recovered: "2,500", newCases: "100"},
-                                    { active: "15,000", deaths: "1,200", recovered: "10,000", newCases: "1,500" },
-                                    { active: "8,000", deaths: "800", recovered: "4,500", newCases: "400"},
-                                    { active: "20,000", deaths: "2,500", recovered: "15,000", newCases: "2,000"},
-                                    { active: "5,000", deaths: "300", recovered: "2,500", newCases: "100"},
-                                    { active: "20,000", deaths: "2,500", recovered: "15,000", newCases: "2,000"},
-                                    { active: "5,000", deaths: "300", recovered: "2,500", newCases: "100"},
-                                    { active: "15,000", deaths: "1,200", recovered: "10,000", newCases: "1,500"}
+                                    { registro: "1"},
+                                    { registro: "2"},
+                                    { registro: "3"},
+                                    { registro: "4"},
+                                    { registro: "5"},
+                                    { registro: "6"},
+                                    { registro: "7"},
+                                    { registro: "8"},
+                                    { registro: "9"},
+                                    { registro: "10"},
+                                    { registro: "11"}
+
                                 ];
                             
                                 const itemsPerPage = 8; // Cambia este número para ajustar la cantidad de filas por página
@@ -167,9 +477,6 @@
     </main>
     <!--== End Main Content Wrapper ==-->
 
-
-    <!--=======================Javascript============================-->
-    <!-- build:js assets/js/app.min.js -->
     <script>
         const d = new Date();
          // Formatear la fecha
@@ -180,36 +487,6 @@
         });
         document.getElementById("time").textContent = formattedDate;
     </script>
-        
-    <!--=== Modernizr Min Js ===-->
-    <!--<script src="assets/js/modernizr.min.js"></script>-->
-    <!--=== jQuery Min Js ===-->
-    <script src="assets/js/jquery.min.js"></script>
-    <!--=== jQuery Migration Min Js ===-->
-    <script src="assets/js/jquery-migrate.min.js"></script>
-    <!--=== Popper Min Js ===-->
-    <script src="assets/js/popper.min.js"></script>
-    <!--=== Bootstrap Min Js ===-->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!--=== Select2 Min Js ===-->
-    <script src="assets/js/select2.full.min.js"></script>
-    <!--=== Data Table Min Js ===-->
-    <script src="assets/js/datatables.min.js"></script>
-    <!--=== ChartJS Min Js ===-->
-    <script src="assets/js/chart.min.js"></script>
-    <!--=== jQuery Vector Map Min Js ===-->
-    <script src="assets/js/jquery.vmap.min.js"></script>
-    <!--=== jQuery Vector World Min Js ===-->
-    <script src="assets/js/jquery.vmap.world.js"></script>
-
-    <!--=== APP Js ===-->
-    <script src="assets/js/app.js"></script>
-    <!--=== Active Js ===-->
-    <script src="assets/js/active.js"></script>
-
-    <!-- endbuild -->
+  
 </body>
-
-
-<!-- Mirrored from htmldemo.net/jibanu/jibanu/badge.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 Sep 2024 12:46:54 GMT -->
 </html>
