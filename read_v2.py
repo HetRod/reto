@@ -1,4 +1,4 @@
-import pandas as pd
+# pip install pywin32
 import win32com.client
 
 # Especifica la ruta del archivo Excel
