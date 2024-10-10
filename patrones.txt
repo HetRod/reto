@@ -1,0 +1,5 @@
+patron_factura=r'Factura\s*No\s*:\s*(\d+)'
+patron_nro_factura=r'Nro\.?\s*de\s*factura\s*:\s*(\d+)'
+patron_valor=r'(Valor Total del Pago|total a pagar|Total a Pagar|pago total|Valor pagado)\s*:?\s*\$?\s*([\d{1,3}(?:,\d{3})*(?:\.\d{2})?]+)'
+patron_fecha_hora=r'\d{1,2}\s+de\s+(Enero|Febrero|Marzo|Abril|Mayo|Junio|Julio|Agosto|Septiembre|Octubre|Noviembre|Diciembre)\s+de\s+\d{4}'
+patron_fecha_envio=r'Fecha de envío del pago\s*:\s*(\d{2}-\d{2}-\d{4})'
