@@ -5,6 +5,7 @@ import os
 import pdfplumber
 import re
 import sys
+import win32com.client
 from datetime import datetime
 
 
@@ -133,6 +134,8 @@ def agrupar_y_sumar_total(archivo_excel, columnas_a_extraer, hoja):
 # Función para procesar y actualizar la columna OBSERVACIONES
 def actualizar_observaciones(archivo_excel, hoja, nombre_pdf, coincidencias):
     # Cargar el archivo Excel especificando la hoja
+
+
     df = pd.read_excel(archivo_excel, sheet_name=hoja)
     
     # Limpiar los nombres de las columnas para eliminar espacios y saltos de línea
@@ -157,15 +160,23 @@ def actualizar_observaciones(archivo_excel, hoja, nombre_pdf, coincidencias):
     elif coincidencias[-3:] == [1, 1, 1]:
         observacion = ''
     
+
     
-    # Iterar por cada fila y buscar donde el NUMERO DE COMPROBANTE coincide con el nombre del PDF
+
     for i, row in df.iterrows():
         if str(row['NUMERO DE COMPROBANTE']) == nombre_pdf:
-            # Si coincide, escribimos las coincidencias en la columna OBSERVACIONES
-            df.at[i, 'OBSERVACIONES BANCO'] = str(observacion)
+            sheet = workbook.Sheets(hoja)
+            sheet.Cells(i + 2, 36).Value = observacion
+            
     
-    # Guardar el archivo Excel actualizado
-    df.to_excel(archivo_excel, sheet_name=hoja, index=False)
+    # # Iterar por cada fila y buscar donde el NUMERO DE COMPROBANTE coincide con el nombre del PDF
+    # for i, row in df.iterrows():
+    #     if str(row['NUMERO DE COMPROBANTE']) == nombre_pdf:
+    #         # Si coincide, escribimos las coincidencias en la columna OBSERVACIONES
+    #         df.at[i, 'OBSERVACIONES BANCO'] = str(observacion)
+    
+    # # Guardar el archivo Excel actualizado
+    # df.to_excel(archivo_excel, sheet_name=hoja, index=False)
 
 # Adaptación de la función enviar_datos para incluir la actualización de observaciones
 def enviar_datos(num_comprobante, num_factura, valor_pagado, fecha_envio_pago, archivo_excel, hoja):
@@ -198,6 +209,21 @@ def armar_html(data):
         data_html = data_html[:-2] + "\n"
     return data_html
 
+def procesar_archivo_excel(nombre_archivo):
+    try:
+        # Leer el archivo de Excel
+        df = pd.read_excel(nombre_archivo, sheet_name="SELLO")
+        # Organizar el DataFrame por 'NUMERO DE COMPROBANTE'
+        df = df.sort_values(by='NUMERO DE COMPROBANTE')
+        # Recorrer el DataFrame e imprimir la columna H
+        for index, row in df.iterrows():
+            print(row['NUMERO DE COMPROBANTE'],row[' # FACTURA PAGADA'],row['F_LIMITE_PAGO_SIN_RECARGO AAAAMMDD'],row['TOTAL'],index)
+ 
+        return df
+    except Exception as e:
+        print(f"Error al procesar el archivo: {e}")
+        return None
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Uso: python crear_archivo.py <nombre_archivo>")
@@ -206,9 +232,11 @@ if __name__ == "__main__":
 
 #parametro de entrada por input
 # archivo_excel = 'SELLO LEGALIZACION ADMINISTRACION ANTICIPO 26 PARTE 6 JURIDICOS.xlsm'
-
+        
         columnas = ['NUMERO DE COMPROBANTE', '# FACTURA PAGADA', 'F_PAGO AAAAMMDD', 'TOTAL']
-
+        excel = win32com.client.Dispatch("Excel.Application")
+        excel.Visible = False
+        workbook  = excel.Workbooks.Open(r'C:\Pipe\VCSOFT\Bancolombia\bintec\SELLO LEGALIZACION ADMINISTRACION ANTICIPO 26 PARTE 6 JURIDICOS.xlsm')
         resultado = agrupar_y_sumar_total(archivo_excel, columnas, hoja='SELLO')
         resultados_totales =[]
         # Procesar cada fila del Excel
@@ -699,3 +727,5 @@ if __name__ == "__main__":
         """
         
         crear_archivo_html('index.html', contenido_html)
+workbook.Save()
+workbook.Close()
