@@ -40,9 +40,16 @@ def extraer_datos_pdf(ruta_pdf, patrones):
                 resultados['nro_factura'] = nro_factura
 
             # Buscar otros valores como valor pagado
-            valor_pagado = patrones['patron_valor'].search(texto)
+            valor_pagado = None
+            for patron_valor in patrones['patron_valor']:
+                match = patron_valor.search(texto)
+                if match:
+                    valor_pagado = match.group(2)
+                    break
+                print(valor)
+
             if valor_pagado:
-                resultados['valor_pagado'] = procesar_valor_pagado(valor_pagado.group(2))
+                resultados['valor_pagado'] = procesar_valor_pagado(valor_pagado)
 
             # Buscar fecha y hora de la transacción
             fecha_hora_transaccion = patrones['patron_fecha_hora'].search(texto)
@@ -90,7 +97,9 @@ def procesar_pdf_con_parametros(nombre_pdf, num_factura, valor_pagado, fecha_env
             re.compile(r'Nro\.?\s*Doc\.?:?\s*([A-Z]+\d+)'),
             re.compile(r'Cupon\s*(\d+)')
         ],
-        'patron_valor': re.compile(r'(Valor Total del Pago|total a pagar|Total a Pagar|pago total|Valor pagado)\s*:?\s*\$?\s*([\d{1,3}(?:,\d{3})*(?:\.\d{2})?]+)'),
+        'patron_valor': [
+            re.compile(r'(Valor Total del Pago|total a pagar|Total a Pagar|pago total|Valor pagado)\s*:?\s*\$?\s*([\d{1,3}(?:,\d{3})*(?:\.\d{2})?]+)')
+            ],
         'patron_fecha_hora': re.compile(r'\d{1,2}\s+de\s+(Enero|Febrero|Marzo|Abril|Mayo|Junio|Julio|Agosto|Septiembre|Octubre|Noviembre|Diciembre)\s+de\s+\d{4}'),
         'patron_fecha_envio': re.compile(r'Fecha de envío del pago\s*:\s*(\d{2}-\d{2}-\d{4})'),
         'meses': {
@@ -141,11 +150,11 @@ def procesar_archivo_excel(nombre_archivo):
         for index, row in df.iterrows(): 
             if comprobante_anterior == row['NUMERO DE COMPROBANTE']:
                 arreglo_valores[-1][4].append(index + 2)
-                arreglo_valores[-1][3] += row['TOTAL'] 
+                arreglo_valores[-1][3] += int(row['TOTAL']) 
             else:
                 rows.append(index + 2)
                 
-                valor = [row['NUMERO DE COMPROBANTE'],row['# FACTURA PAGADA'],int(row['F_PAGO AAAAMMDD']),row['TOTAL'] ,rows]
+                valor = [row['NUMERO DE COMPROBANTE'], row['# FACTURA PAGADA'], int(row['F_PAGO AAAAMMDD']), int(row['TOTAL']), rows]
                 arreglo_valores.append(valor)
             rows = []
             comprobante_anterior = row['NUMERO DE COMPROBANTE']
